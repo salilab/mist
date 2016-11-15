@@ -8,7 +8,7 @@
 ########################################################################################
 
 from __future__ import print_function
-import numpy, copy, sys
+import numpy, sys
 from operator import itemgetter
 import mdp
 
