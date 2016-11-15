@@ -32,15 +32,15 @@ def ReadInput(file):
     data.close()
 
     M3D = {}
-    experiments = D[0].strip().split('\t')[4:] #
+    experiments = D[0].strip().split('\t')[4:]
     if len(experiments) - len(set(experiments)) != 0:
         print('MatrixFormatingError: not all of the experiments has unique ID')
         raise
-    baits = D[1].strip().split('\t')[4:] #
+    baits = D[1].strip().split('\t')[4:]
     preys = [i.strip().split('\t')[0] for i in D[3:]]
-    ProteinLengths = numpy.array([int(i.strip().split('\t')[2]) for i in D[3:]]) #
+    ProteinLengths = numpy.array([int(i.strip().split('\t')[2]) for i in D[3:]])
 
-    decoys = D[2].strip().split('\t')[4:] #
+    decoys = D[2].strip().split('\t')[4:]
     Decoys = {}
     for n,d in enumerate(baits):
         if d not in Decoys:
@@ -48,15 +48,13 @@ def ReadInput(file):
             if len(composed) > 1: Decoys[d] = [i for i in composed if i != d]
             if len(composed) == 1 and composed[0]==d: Decoys[d] = []
             if len(composed) == 1 and composed[0]!=d: Decoys[d] = composed
-            #if d in composed: Decoys[d] = []
-            #else: Decoys[d] = composed
 
     # create matrix
     matrix = numpy.zeros((len(preys),len(baits)))
     for n,d in enumerate(D[3:]):
         d = d.strip().split('\t')
 
-        PeptideCounts = numpy.array([float(i) for i in d[4:]]) #
+        PeptideCounts = numpy.array([float(i) for i in d[4:]])
         matrix[n,:] = PeptideCounts
 
     # fill in the M3D with the SIN scores
@@ -124,7 +122,6 @@ def ThreeMetrics(M3D,ACCNs,Decoys,filter=0):
         if shp[0] != 1:
             entropies /= (numpy.log2(1./shp[0])) # divide entropies by max entropy
         elif shp[0] == 1:
-            #entropies *= (-1)
             entropies = numpy.ones(shp[1])
         averages /= shp[0]
 
@@ -187,14 +184,12 @@ def OutputMetrics(R,A,S,B,P,out=1,FileName=None):
     X,Y = numpy.shape(R)
     Matrix = numpy.zeros((X*Y,3))
     Pairs = []
-    #Matrix1 = []
     c = 0
     for y in xrange(Y):
         prey = P[y]
         for x in xrange(X):
             bait = B[x]
             Pairs.append((bait,prey))
-            #if R[x,y]+A[x,y]+S[x,y] > 0: Matrix1.append(numpy.array([R[x,y],A[x,y],S[x,y]]))
             Matrix[c,0] = R[x,y]
             Matrix[c,1] = A[x,y]
             Matrix[c,2] = S[x,y]
@@ -202,9 +197,6 @@ def OutputMetrics(R,A,S,B,P,out=1,FileName=None):
             if out==1:
                 line = '%s\t%s\t%.4f\t%.4f\t%.4f\n' % (bait,prey,R[x,y],A[x,y],S[x,y])
                 output.write(line)
-    #Matrix1 = numpy.array(Matrix1)
-    #print len(Matrix1)
-    #print len(Matrix)
     if out==1:
         output.close()
 
@@ -258,7 +250,7 @@ def PCA(matrix,pairs,filter=0):
     for i in matrix:
         scores.append(numpy.sum(Eigens*i))
 
-    scores = PcaScore*(-1) #numpy.array(scores)
+    scores = PcaScore*(-1)
     Scores = (scores - numpy.min(scores)) / (numpy.max(scores) - numpy.min(scores))
 
     if filter == 2:
