@@ -10,7 +10,6 @@
 from __future__ import print_function
 import numpy, sys
 from operator import itemgetter
-import mdp
 import optparse
 
 # --- read in the input
@@ -240,6 +239,7 @@ def PCA(matrix,pairs,filter=0):
     '''
     Calculate PCA
     '''
+    import mdp
 
     pca = mdp.nodes.PCANode(output_dim=3)
     pca.train(matrix)
