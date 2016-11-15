@@ -5,6 +5,7 @@
 #                                    May 2010                                          #
 ########################################################################################
 
+from __future__ import print_function
 import numpy, copy, sys
 from operator import itemgetter
 sys.path.append('/netapp/sali/mist/mdp-2.6')
@@ -32,7 +33,7 @@ def ReadInput(file):
     M3D = {}
     experiments = D[0].strip().split('\t')[4:] #
     if len(experiments) - len(set(experiments)) != 0:
-        print 'MatrixFormatingError: not all of the experiments has unique ID'
+        print('MatrixFormatingError: not all of the experiments has unique ID')
         raise
     baits = D[1].strip().split('\t')[4:] #
     preys = [i.strip().split('\t')[0] for i in D[3:]]
@@ -86,7 +87,7 @@ def ThreeMetrics(M3D,ACCNs,Decoys,filter=0):
                 if exp not in M3D_normal[bait]:
                     M3D_normal[bait][exp] = Z
                 else:
-                    print 'ExperimentError: repeated experiment %i when normalizing data' % exp
+                    print('ExperimentError: repeated experiment %i when normalizing data' % exp)
                     raise
 
     M3D = None # delete hash
@@ -130,7 +131,7 @@ def ThreeMetrics(M3D,ACCNs,Decoys,filter=0):
             EntReplicates[bait] = entropies
             AvgReplicates[bait] = averages
         else:
-            print 'BaitError: bait %s appears multiple times' % bait
+            print('BaitError: bait %s appears multiple times' % bait)
             raise
 
     Reproducibility = []
