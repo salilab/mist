@@ -372,29 +372,31 @@ def parse_args():
 MiST - Mass spectrometry interaction STatistics.
 
 Vignette for input file:
-\tInput file should contain tab separated information in columns
-\tas in this example:\n
-\t\t#   #\t#\t# A1      A2      B1      B2      C1      C2
-\t\tPreys\t#    Length\t#       A       A       B       B       C       C
-\t\tBC\t#\t#\t#\tA\tA\tA\tA\tC\tC
-\t\tprot1\t#    188\t#  12      4       7       24      16      21
-\t\tprot2\t#    157\t#  0       0       0       1       0       2
-\t\tprot3\t#    723\t#  9       21      18      57      24      0
-\t\tprot4\t#    186\t#  6       10      7       14      15      21
-\t\tprot5\t#    988\t#  0       0       0       0       0       12\n
-\tTwo files will be generated - *_metrics.out and *_mist.out, both
-\tcontaing bait,prey pair and either the three metrics (reproducibility,
-\tabundance,specificity) or MiST score, respectively.
+Input file should contain tab separated information in columns
+as in this example:
 
-\tThe third line (BC - Bait Composition) is useful when one would like omit
-\tcertain baits in a calculation of the specificity of the given bait. For
-\texample, pull-downs can be done with full-length protein as well as with
-\tits domains. In this case, one can expect to find similar preys in both cases.
-\tThe field in this line is a bait that should be omitted to calculate specificity,
-\tOR bait itself (this is mandatory). If there are multiple baits to be omitted,
-\tseparate them with '|' and use no white spaces in-between.
+  #   #\t#\t# A1      A2      B1      B2      C1      C2
+  Preys\t#    Length\t#       A       A       B       B       C       C
+  BC\t#\t#\t#\tA\tA\tA\tA\tC\tC
+  prot1\t#    188\t#  12      4       7       24      16      21
+  prot2\t#    157\t#  0       0       0       1       0       2
+  prot3\t#    723\t#  9       21      18      57      24      0
+  prot4\t#    186\t#  6       10      7       14      15      21
+  prot5\t#    988\t#  0       0       0       0       0       12
 
-\tFilter argument filters out the preys detected only ones if 1.
+Two files will be generated - *_metrics.out and *_mist.out, both
+containg bait,prey pair and either the three metrics (reproducibility,
+abundance,specificity) or MiST score, respectively.
+
+The third line (BC - Bait Composition) is useful when one would like to omit
+certain baits in a calculation of the specificity of the given bait. For
+example, pull-downs can be done with full-length protein as well as with
+its domains. In this case, one can expect to find similar preys in both cases.
+The field in this line is a bait that should be omitted to calculate
+specificity, OR bait itself (this is mandatory). If there are multiple
+baits to be omitted, separate them with '|' and use no white spaces inbetween.
+
+Filter argument filters out the preys detected only ones if 1.
 """
     parser = optparse.OptionParser(usage)
     opts, args = parser.parse_args()
