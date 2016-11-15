@@ -1,16 +1,17 @@
 #!/usr/bin/env python
 
-########################################################################################
-#                  MiST - Mass spectrometry interaction STatistics                     #
-#                                Peter Cimermancic                                     #
-#                                   Krogan Lab                                         #
-#                                    May 2010                                          #
-########################################################################################
+######################################################################
+#                  MiST - Mass spectrometry interaction STatistics   #
+#                                Peter Cimermancic                   #
+#                                   Krogan Lab                       #
+#                                    May 2010                        #
+######################################################################
 
 from __future__ import print_function
 import numpy, sys
 from operator import itemgetter
 import mdp
+import optparse
 
 # --- read in the input
 def ReadInput(file):
@@ -316,8 +317,7 @@ def postprocess():
 
 
 
-# --- MAIN ---
-def main():
+def predict(args):
 
     LO0 = '''
 \t*****************************************************************
@@ -326,9 +326,51 @@ def main():
 \t*                           May 2010                            *
 \t*****************************************************************\n\n'''
 
-    if len(sys.argv) < 5:
-        explain = '''
-Correct Usage: python MiST.py <input>  <output>  <filter (0/1)> <training (0/1)>
+    training = int(args[-1])
+
+    logFile = open('%s.log' % args[-3],'w')
+
+    A,B,C,E,D = ReadInput(args[-4])
+    LO1 = 'Number of Preys: %i\n' % len(B)
+    LO2 = 'Number of Experiments: %i\n' % len(E)
+    LO3 = 'Number of Baits: %i\n' % len(C)
+    R,A,S,Baits = ThreeMetrics(A,B,D,int(args[-2]))
+    Matrix,Pairs = OutputMetrics(R,A,S,Baits,B,out=1,FileName=args[-3])
+
+    logFile.write(LO0)
+    logFile.write(LO1)
+    logFile.write(LO2)
+    logFile.write(LO3)
+
+    if training == 1:
+        score,variance,eigens = PCA(Matrix,Pairs,int(args[-2]))
+        LO4 = '''
+Percentage of variance described (cumulatively):
+PC1: %.5f
+PC2: %.5f
+PC3: %.5f\n''' % tuple(variance)
+
+        LO5 = '''
+Eigenvector - weights:
+Reproducibility: %.5f
+Abundance: %.5f
+Specificity: %.5f\n''' % tuple(eigens)
+
+        logFile.write(LO4)
+        logFile.write(LO5)
+
+    elif training == 0:
+        score = NoTraining(R,A,S,Baits,B)
+
+    OutputPCA(Pairs,score,args[-3])
+    LO6 = '\nThank you for using MiST!\n'
+    logFile.write(LO6)
+
+def parse_args():
+    usage = """%prog [opts] <input> <output> <filter (0/1)> <training (0/1)>
+
+MiST - Mass spectrometry interaction STatistics.
+
 Vignette for input file:
 \tInput file should contain tab separated information in columns
 \tas in this example:\n
@@ -353,52 +395,16 @@ Vignette for input file:
 \tseparate them with '|' and use no white spaces in-between.
 
 \tFilter argument filters out the preys detected only ones if 1.
+"""
+    parser = optparse.OptionParser(usage)
+    opts, args = parser.parse_args()
+    if len(args) != 5:
+        parser.error("incorrect number of arguments")
+    return args
 
-                  '''
-        #print explain
-
-    else:
-
-        training = int(sys.argv[-1])
-
-        logFile = open('%s.log' % sys.argv[-3],'w')
-
-        A,B,C,E,D = ReadInput(sys.argv[-4])
-        LO1 = 'Number of Preys: %i\n' % len(B)
-        LO2 = 'Number of Experiments: %i\n' % len(E)
-        LO3 = 'Number of Baits: %i\n' % len(C)
-        R,A,S,Baits = ThreeMetrics(A,B,D,int(sys.argv[-2]))
-        Matrix,Pairs = OutputMetrics(R,A,S,Baits,B,out=1,FileName=sys.argv[-3])
-
-        logFile.write(LO0)
-        logFile.write(LO1)
-        logFile.write(LO2)
-        logFile.write(LO3)
-
-        if training == 1:
-            score,variance,eigens = PCA(Matrix,Pairs,int(sys.argv[-2]))
-            LO4 = '''
-Percentage of variance described (cumulatively):
-PC1: %.5f
-PC2: %.5f
-PC3: %.5f\n''' % tuple(variance)
-
-            LO5 = '''
-Eigenvector - weights:
-Reproducibility: %.5f
-Abundance: %.5f
-Specificity: %.5f\n''' % tuple(eigens)
-
-            logFile.write(LO4)
-            logFile.write(LO5)
-
-        elif training == 0:
-            score = NoTraining(R,A,S,Baits,B)
-
-        OutputPCA(Pairs,score,sys.argv[-3])
-        LO6 = '\nThank you for using MiST!\n'
-        logFile.write(LO6)
-
+def main():
+    args = parse_args()
+    predict(args)
 
 if __name__ == '__main__':
     main()
