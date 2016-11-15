@@ -117,12 +117,12 @@ def ThreeMetrics(M3D,ACCNs,Decoys,filter=0):
                 if y > 0.0 and y != 1.:   # if TEMP[y,x] == 0: H == 0 by definition
                     entropies[x] += y * numpy.log2(y)
                     averages[x] += y
-                elif y == 1.:             # to avoid confusion to all-zeros case
+                elif y == 1.:             # to avoid confusion to all-zeroes case
                     entropies[x] += (y-1e-10) * numpy.log2(y-1e-10)
             averages[x]  = sumx
 
         if shp[0] != 1:
-            entropies /= (numpy.log2(1./shp[0])) # devide entropies by max entropy
+            entropies /= (numpy.log2(1./shp[0])) # divide entropies by max entropy
         elif shp[0] == 1:
             #entropies *= (-1)
             entropies = numpy.ones(shp[1])
@@ -214,7 +214,7 @@ def OutputMetrics(R,A,S,B,P,out=1,FileName=None):
 # --- No training of the three metrics
 def NoTraining(R,A,S,B,P):
     '''
-    Calculate MiST scores from the three metrics withouth training
+    Calculate MiST scores from the three metrics without training
     '''
 
     X,Y = numpy.shape(R)
@@ -321,7 +321,7 @@ def predict(args):
 
     LO0 = '''
 \t*****************************************************************
-\t*  Wellcome to MiST - Mass spectormetry Interaction STatistics  *
+\t*  Welcome to MiST - Mass spectrometry Interaction STatistics   *
 \t*       written by Peter Cimermancic (Krogan/Sali Lab)          *
 \t*                           May 2010                            *
 \t*****************************************************************\n\n'''
