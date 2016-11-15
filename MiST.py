@@ -66,7 +66,7 @@ def ReadInput(file):
     return (M3D,preys,list(set(baits)),experiments,Decoys)
 
 
-def ThreeMetrics(M3D,ACCNs,Decoys,filter=0):
+def ThreeMetrics(M3D,ACCNs,Decoys,filt=0):
     '''
     Returns the three metrics
     '''
@@ -166,7 +166,7 @@ def ThreeMetrics(M3D,ACCNs,Decoys,filter=0):
                 Specificity[j,i] = Abundancy[j,i] / summ[i]
             else: Specificity[j,i] = 0.
 
-            if filter == 1:
+            if filt == 1:
                 if Specificity[j,i] == 1.0 and Reproducibility[j,i] < 10e-7: Specificity[j,i] = 0.0
 
     return (Reproducibility,Abundancy,Specificity,Baits)
@@ -226,7 +226,7 @@ def NoTraining(R,A,S,B,P):
     return Scores
 
 # --- Perform PCA
-def PCA(matrix,pairs,filter=0):
+def PCA(matrix,pairs,filt=0):
     '''
     Calculate PCA
     '''
@@ -252,7 +252,7 @@ def PCA(matrix,pairs,filter=0):
     scores = PcaScore*(-1)
     Scores = (scores - numpy.min(scores)) / (numpy.max(scores) - numpy.min(scores))
 
-    if filter == 2:
+    if filt == 2:
         for x in xrange(len(Scores)):
             if matrix[x,0] < 10e-7 and matrix[x,2] == 1: Scores[x] = 0.1
 
