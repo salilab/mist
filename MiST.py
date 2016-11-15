@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 ########################################################################################
 #                  MiST - Mass spectrometry interaction STatistics                     #
 #                                Peter Cimermancic                                     #
