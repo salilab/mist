@@ -10,7 +10,6 @@
 from __future__ import print_function
 import numpy, copy, sys
 from operator import itemgetter
-sys.path.append('/netapp/sali/mist/mdp-2.6')
 import mdp
 
 # --- read in the input
