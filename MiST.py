@@ -27,9 +27,8 @@ def ReadInput(file):
               ...
               }
     '''
-    data = open(file,'rU')
-    D = data.readlines()
-    data.close()
+    with open(file,'rU') as data:
+        D = data.readlines()
 
     M3D = {}
     experiments = D[0].strip().split('\t')[4:]
@@ -279,15 +278,12 @@ def OutputPCA(Pairs,scores,filename):
 def postprocess():
     """Combine the three files"""
 
-    data1 = open('output.log','r')
-    data2 = open('output_metrics.out','r')
-    data3 = open('output_mist.out','r')
-
-    D1 = data1.readlines()
-    D2 = data2.readlines()
-    D3 = data3.readlines()
-
-    data1.close(); data2.close(); data3.close()
+    with open('output.log','r') as data:
+        D1 = data.readlines()
+    with open('output_metrics.out','r') as data:
+        D2 = data.readlines()
+    with open('output_mist.out','r') as data:
+        D3 = data.readlines()
 
     newOutput = open('MistOutput.txt','w')
 
