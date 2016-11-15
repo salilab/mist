@@ -315,7 +315,7 @@ def postprocess():
 
 
 # --- MAIN ---
-def __main__():
+def main():
 
     LO0 = '''
 \t*****************************************************************
@@ -398,5 +398,5 @@ Eigenvector - weights:
 		logFile.write(LO6)
 
 
-__main__()
-#postprocess()
+if __name__ == '__main__':
+    main()
