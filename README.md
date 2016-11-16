@@ -1,6 +1,7 @@
 [![docs](https://readthedocs.org/projects/mistsalilab/badge/)](https://mistsalilab.readthedocs.org/)
 [![Build Status](https://travis-ci.org/salilab/mist.svg?branch=master)](https://travis-ci.org/salilab/mist)
 [![codecov](https://codecov.io/gh/salilab/mist/branch/master/graph/badge.svg)](https://codecov.io/gh/salilab/mist)
+[![Code Climate](https://codeclimate.com/github/salilab/mist/badges/gpa.svg)](https://codeclimate.com/github/salilab/mist)
 
 MiST - Mass spectrometry Interaction STatistics
 
