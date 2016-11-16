@@ -82,13 +82,8 @@ def ThreeMetrics(M3D,ACCNs,Decoys,filt=0):
             Z = S / numpy.sum(S)
 
             if bait not in M3D_normal:
-                M3D_normal[bait] = {exp:Z}
-            else:
-                if exp not in M3D_normal[bait]:
-                    M3D_normal[bait][exp] = Z
-                else:
-                    print('ExperimentError: repeated experiment %i when normalizing data' % exp)
-                    raise
+                M3D_normal[bait] = {}
+            M3D_normal[bait][exp] = Z
 
     M3D = None # delete hash
 
