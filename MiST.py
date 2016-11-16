@@ -12,6 +12,9 @@ import numpy, sys
 from operator import itemgetter
 import optparse
 
+class MatrixFormatError(Exception):
+    pass
+
 # --- read in the input
 def ReadInput(file):
     '''
@@ -33,8 +36,7 @@ def ReadInput(file):
     M3D = {}
     experiments = D[0].strip().split('\t')[4:]
     if len(experiments) - len(set(experiments)) != 0:
-        print('MatrixFormatingError: not all of the experiments has unique ID')
-        raise
+        raise MatrixFormatError("Not all of the experiments have unique ID")
     baits = D[1].strip().split('\t')[4:]
     preys = [i.strip().split('\t')[0] for i in D[3:]]
     ProteinLengths = numpy.array([int(i.strip().split('\t')[2]) for i in D[3:]])

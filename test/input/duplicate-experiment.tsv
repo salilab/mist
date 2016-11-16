@@ -1,0 +1,8 @@
+#	#	#	Exps	A1	A1	B1	B2	C1	C2
+#	#	#	Baits	A	A	B	B	C	C
+Prey	#	Length	BaitSims	A	A	B|C	B|C	B|C	B|C
+Protein1	#	188	#	12	4	12	4	7	24
+Protein2	#	157	#	0	0	0	1	0	2
+Protein3	#	723	#	9	21	18	57	24	0
+Protein4	#	186	#	0	6	7	1	15	21
+Protein5	#	988	#	0	0	0	12	0	0

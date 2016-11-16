@@ -59,5 +59,12 @@ class Tests(unittest.TestCase):
             os.unlink("test_metrics.out")
             os.unlink("test_mist.out")
 
+    def test_read_input_duplicate_experiment(self):
+        """Test read_input() with duplicate experiment"""
+        import MiST
+        fname = os.path.join(TOPDIR, 'test', 'input',
+                             'duplicate-experiment.tsv')
+        self.assertRaises(MiST.MatrixFormatError, MiST.ReadInput, fname)
+
 if __name__ == '__main__':
     unittest.main()
