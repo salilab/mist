@@ -7,7 +7,7 @@ python:
 cache:
   pip: true
 install:
-  - pip install coverage
+  - pip install coverage mdp
 script:
   - nosetests --with-coverage --cover-branches
 after_success:
