@@ -57,7 +57,7 @@ def ReadInput(file):
         matrix[n,:] = PeptideCounts
 
     # fill in the M3D with the SIN scores
-    for e in xrange(len(experiments)):
+    for e in range(len(experiments)):
         if baits[e] not in M3D:
             M3D[baits[e]] = {experiments[e]:list(matrix[:,e] / ProteinLengths / numpy.sum(matrix[:,e]))}
         else:
@@ -107,7 +107,7 @@ def ThreeMetrics(M3D,ACCNs,Decoys,filt=0):
         TEMP = numpy.array(TEMP)
         shp = numpy.shape(TEMP)
 
-        for x in xrange(shp[1]):
+        for x in range(shp[1]):
             sumx = numpy.sum(TEMP[:,x])
             protx = TEMP[:,x] / sumx    # normalize per protein in replicates
             for y in protx:
@@ -148,9 +148,9 @@ def ThreeMetrics(M3D,ACCNs,Decoys,filt=0):
     summ = numpy.zeros(SHP[1]) # sum over baits
     Specificity = numpy.zeros(SHP) # probabilities per protein over all baits
 
-    for i in xrange(SHP[1]):         # over preys
+    for i in range(SHP[1]):         # over preys
 
-        for j in xrange(SHP[0]):     # over baits
+        for j in range(SHP[0]):     # over baits
 
             M = Decoys[Baits[j]]                 # keep the list of decoys
             MP = None
@@ -184,9 +184,9 @@ def OutputMetrics(R,A,S,B,P,out=1,FileName=None):
     Matrix = numpy.zeros((X*Y,3))
     Pairs = []
     c = 0
-    for y in xrange(Y):
+    for y in range(Y):
         prey = P[y]
-        for x in xrange(X):
+        for x in range(X):
             bait = B[x]
             Pairs.append((bait,prey))
             Matrix[c,0] = R[x,y]
@@ -211,9 +211,9 @@ def NoTraining(R,A,S,B,P):
     X,Y = numpy.shape(R)
     c = 0
     Scores = []
-    for y in xrange(Y):
+    for y in range(Y):
         prey = P[y]
-        for x in xrange(X):
+        for x in range(X):
             bait = B[x]
 
             r = R[x,y]
@@ -253,7 +253,7 @@ def PCA(matrix,pairs,filt=0):
     Scores = (scores - numpy.min(scores)) / (numpy.max(scores) - numpy.min(scores))
 
     if filt == 2:
-        for x in xrange(len(Scores)):
+        for x in range(len(Scores)):
             if matrix[x,0] < 10e-7 and matrix[x,2] == 1: Scores[x] = 0.1
 
     return (Scores,Variance,EIV)
