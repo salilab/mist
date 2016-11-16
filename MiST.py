@@ -388,7 +388,7 @@ Filter argument filters out the preys detected only ones if 1.
 """
     parser = optparse.OptionParser(usage)
     opts, args = parser.parse_args()
-    if len(args) != 5:
+    if len(args) != 4:
         parser.error("incorrect number of arguments")
     return args
 
