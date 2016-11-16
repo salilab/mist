@@ -273,38 +273,6 @@ def OutputPCA(Pairs,scores,filename):
 
     output.close()
 
-
-# --- Combine the three files
-def postprocess():
-    """Combine the three files"""
-
-    with open('output.log','r') as data:
-        D1 = data.readlines()
-    with open('output_metrics.out','r') as data:
-        D2 = data.readlines()
-    with open('output_mist.out','r') as data:
-        D3 = data.readlines()
-
-    newOutput = open('MistOutput.txt','w')
-
-    for d in D1: newOutput.write('# ' + d)
-
-    Ints = {}
-    for d in D2[1:]:
-        b,p,r,a,s = d.strip().split('\t')
-        Ints[(b,p)] = [r,a,s]
-    for d in D3[1:]:
-        b,p,m = d.strip().split('\t')
-        if (b,p) in Ints: Ints[(b,p)].append(m)
-
-    interactions = [tuple(list(i)+Ints[i]) for i in Ints if len(Ints[i])==4]
-    ints = sorted(interactions,key=itemgetter(5),reverse=True)
-    newOutput.write('\n#'+'\t'.join(['Bait','Prey','Reproducibility','Abundance','Specificity','MiST'])+'\n')
-    for i in ints: newOutput.write('\t'.join(list(i))+'\n')
-    newOutput.close()
-
-
-
 def predict(args):
 
     LO0 = '''
