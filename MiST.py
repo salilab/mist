@@ -317,7 +317,7 @@ Specificity: %.5f\n''' % tuple(eigens)
         logFile.write(LO4)
         logFile.write(LO5)
 
-    elif training == 0:
+    else:
         score = NoTraining(R,A,S,Baits,B)
 
     OutputPCA(Pairs,score,args[-3])
