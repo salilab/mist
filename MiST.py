@@ -85,7 +85,8 @@ def ThreeMetrics(M3D,ACCNs,Decoys,filt=0):
     # --- Normalize experiments
     M3D_normal = {}
     for bait in M3D:
-        if bait == None: continue
+        if bait is None:
+            continue
         for exp in M3D[bait]:
             S = numpy.array(M3D[bait][exp])
             Z = S / numpy.sum(S)
