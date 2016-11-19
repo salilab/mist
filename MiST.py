@@ -130,12 +130,8 @@ def ThreeMetrics(M3D,ACCNs,Decoys,filt=0):
             entropies = numpy.ones(shp[1])
         averages /= shp[0]
 
-        if bait not in EntReplicates:
-            EntReplicates[bait] = entropies
-            AvgReplicates[bait] = averages
-        else:
-            print('BaitError: bait %s appears multiple times' % bait)
-            raise
+        EntReplicates[bait] = entropies
+        AvgReplicates[bait] = averages
 
     Reproducibility = []
     Abundancy = []
