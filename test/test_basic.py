@@ -59,6 +59,20 @@ class Tests(unittest.TestCase):
             os.unlink("test_metrics.out")
             os.unlink("test_mist.out")
 
+    def test_complete_filtering(self):
+        """Test complete run, with filtering"""
+        with utils.temporary_working_directory() as tmpdir:
+            shutil.copy(os.path.join(TOPDIR, 'test', 'input', 'input.tsv'), '.')
+            subprocess.check_call(['MiST.py', 'input.tsv', 'test', '1', '0'])
+            with open('test.log') as fh:
+                contents = fh.readlines()
+            self.assertTrue('Number of Preys: 5\n' in contents)
+            self.assertTrue('Number of Experiments: 6\n' in contents)
+            self.assertTrue('Number of Baits: 3\n' in contents)
+            os.unlink("test.log")
+            os.unlink("test_metrics.out")
+            os.unlink("test_mist.out")
+
     def test_read_input_duplicate_experiment(self):
         """Test read_input() with duplicate experiment"""
         import MiST
