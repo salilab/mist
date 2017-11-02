@@ -5,6 +5,7 @@ import utils
 import contextlib
 import subprocess
 import shutil
+import numpy
 
 TOPDIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(TOPDIR)
@@ -79,6 +80,20 @@ class Tests(unittest.TestCase):
         fname = os.path.join(TOPDIR, 'test', 'input',
                              'duplicate-experiment.tsv')
         self.assertRaises(MiST.MatrixFormatError, MiST.ReadInput, fname)
+
+    def test_output_metrics_noout(self):
+        """Test OutputMetrics() with no file output"""
+        import MiST
+        R = numpy.array(((1,2), (3,4)))
+        A = numpy.array(((5,6), (7,8)))
+        S = numpy.array(((9,10), (11,12)))
+        B = ['bait1', 'bait2']
+        P = ['prey1', 'prey2']
+        matrix, pairs = MiST.OutputMetrics(R, A, S, B, P, out=0)
+        self.assertAlmostEqual(matrix[0][0], 1., places=2)
+        self.assertEqual(pairs,
+                         [('bait1', 'prey1'), ('bait2', 'prey1'),
+                          ('bait1', 'prey2'), ('bait2', 'prey2')])
 
 if __name__ == '__main__':
     unittest.main()
