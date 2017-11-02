@@ -12,4 +12,4 @@ ${BINDIR}/%: %
 	install $< $@
 
 test:
-	cd test && nosetests
+	nosetests --processes=-1 test
