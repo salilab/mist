@@ -20,7 +20,7 @@ from __future__ import print_function
 import numpy
 import sys
 from operator import itemgetter
-import optparse
+import argparse
 
 
 class MatrixFormatError(Exception):
@@ -306,7 +306,7 @@ def predict(args):
 \t*                           May 2010                            *
 \t*****************************************************************\n\n'''
 
-    training = int(args[-1])
+    training = args[-1]
 
     logFile = open('%s.log' % args[-3], 'w')
 
@@ -314,7 +314,7 @@ def predict(args):
     LO1 = 'Number of Preys: %i\n' % len(B)
     LO2 = 'Number of Experiments: %i\n' % len(E)
     LO3 = 'Number of Baits: %i\n' % len(C)
-    R, A, S, Baits = ThreeMetrics(A, B, D, int(args[-2]))
+    R, A, S, Baits = ThreeMetrics(A, B, D, args[-2])
     Matrix, Pairs = OutputMetrics(R, A, S, Baits, B, out=1, FileName=args[-3])
 
     logFile.write(LO0)
@@ -323,7 +323,7 @@ def predict(args):
     logFile.write(LO3)
 
     if training == 1:
-        score, variance, eigens = PCA(Matrix, Pairs, int(args[-2]))
+        score, variance, eigens = PCA(Matrix, Pairs, args[-2])
         LO4 = '''
 Percentage of variance described (cumulatively):
 PC1: %.5f
@@ -348,7 +348,7 @@ Specificity: %.5f\n''' % tuple(eigens)
 
 
 def parse_args():
-    usage = """%prog [opts] <input> <output> <filter (0/1)> <training (0/1)>
+    usage = """%(prog)s [opts] <input> <output> <filter (0/1)> <training (0/1)>
 
 MiST - Mass spectrometry interaction STatistics.
 
@@ -379,11 +379,17 @@ baits to be omitted, separate them with '|' and use no white spaces inbetween.
 
 Filter argument filters out the preys detected only ones if 1.
 """
-    parser = optparse.OptionParser(usage)
-    opts, args = parser.parse_args()
-    if len(args) != 4:
-        parser.error("incorrect number of arguments")
-    return args
+    parser = argparse.ArgumentParser(usage=usage)
+    parser.add_argument('input', metavar='FILE', type=str,
+                        help="input file name")
+    parser.add_argument('output', metavar='FILE', type=str,
+                        help="output file name")
+    parser.add_argument('filter', metavar='INT', type=int,
+                        help="filter (0/1)")
+    parser.add_argument('training', metavar='INT', type=int,
+                        help="training (0/1)")
+    args = parser.parse_args()
+    return args.input, args.output, args.filter, args.training
 
 
 def main():
