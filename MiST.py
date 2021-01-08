@@ -18,6 +18,7 @@
 
 from __future__ import print_function
 import numpy
+import sys
 from operator import itemgetter
 import optparse
 
@@ -41,7 +42,9 @@ def ReadInput(file):
               ...
               }
     '''
-    with open(file, 'rU') as data:
+    # Request universal newlines in Python 2 (on by default in Py3)
+    mode = 'rU' if sys.version_info[0] == 2 else 'r'
+    with open(file, mode) as data:
         D = data.readlines()
 
     M3D = {}
