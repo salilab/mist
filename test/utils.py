@@ -5,6 +5,7 @@ import shutil
 import contextlib
 import subprocess
 
+
 def check_output(args, stderr=None, retcode=0, input=None, *other, **keys):
     """Run a subprocess and return its output.
        If the return code from the subprocess does not match `retcode`, an
@@ -22,11 +23,13 @@ def check_output(args, stderr=None, retcode=0, input=None, *other, **keys):
                       % (" ".join(args), p.returncode, stdout))
     return stdout
 
+
 @contextlib.contextmanager
 def temporary_directory():
     _tmpdir = tempfile.mkdtemp()
     yield _tmpdir
     shutil.rmtree(_tmpdir, ignore_errors=True)
+
 
 @contextlib.contextmanager
 def temporary_working_directory():
@@ -37,6 +40,7 @@ def temporary_working_directory():
     os.chdir(_olddir)
     shutil.rmtree(_tmpdir, ignore_errors=True)
 
+
 @contextlib.contextmanager
 def mocked_object(parent, objname, replacement):
     """Temporarily replace parent.objname with replacement.
@@ -45,6 +49,7 @@ def mocked_object(parent, objname, replacement):
     setattr(parent, objname, replacement)
     yield
     setattr(parent, objname, oldobj)
+
 
 @contextlib.contextmanager
 def mocked_objects(objs):
@@ -57,6 +62,7 @@ def mocked_objects(objs):
     for obj, oldobj in zip(objs, oldobjs):
         parent, objname, replacement = obj
         setattr(parent, objname, oldobj)
+
 
 if 'coverage' in sys.modules:
     import atexit
