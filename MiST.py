@@ -250,18 +250,18 @@ def PCA(matrix, pairs, filt=0):
     '''
     Calculate PCA
     '''
-    import mdp
+    from sklearn.decomposition import PCA
 
-    pca = mdp.nodes.PCANode(output_dim=3)
-    pca.train(matrix)
+    pca = PCA(n_components=3)
+    P = pca.fit_transform(matrix)
 
-    P = pca(matrix)
     PcaScore = P[:, 0]
 
-    Eigens = pca.d
+    Eigens = pca.explained_variance_
     Eigens /= numpy.sum(Eigens)
 
-    EIV = numpy.transpose(pca.v[:, 0]) / numpy.sum(pca.v[:, 0])
+    v = pca.components_.T
+    EIV = numpy.transpose(v[:, 0]) / numpy.sum(v[:, 0])
 
     Variance = [Eigens[0], Eigens[0] + Eigens[1], numpy.sum(Eigens)]
 

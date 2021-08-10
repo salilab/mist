@@ -20,7 +20,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        pip install coverage pytest-cov pytest-flake8 mdp
+        pip install coverage pytest-cov pytest-flake8 scikit-learn
     - name: Test
       run: |
         pytest --cov=. --cov-branch --cov-report=xml --flake8 -v .
