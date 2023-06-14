@@ -23,8 +23,9 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        pip install coverage pytest-cov pytest-flake8 scikit-learn
+        pip install coverage pytest-cov flake8 scikit-learn
     - name: Test
       run: |
-        pytest --cov=. --cov-branch --cov-report=xml --flake8 -v .
+        pytest --cov=. --cov-branch --cov-report=xml -v .
+        flake8 --ignore E402,W503,W504 --exclude doc/conf.py .
     - uses: codecov/codecov-action@v1
